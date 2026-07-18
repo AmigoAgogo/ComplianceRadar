@@ -1,0 +1,129 @@
+[
+  {
+    "evidence": {},
+    "fetch_mode": "network_error",
+    "final_url": null,
+    "http_status": null,
+    "notes": [
+      "Network fetch failed: HTTPSConnectionPool(host='www.cbirc.gov.cn', port=443): Max retries exceeded with url: / (Caused by NameResolutionError(\"HTTPSConnection(host='www.cbirc.gov.cn', port=443): Failed to resolve 'www.cbirc.gov.cn' ([Errno 11001] getaddrinfo failed)\"))"
+    ],
+    "recommended_adapter": "browser_required",
+    "source_id": "src-nfra-js",
+    "source_name": "国家金融监督管理总局江苏监管局",
+    "sync_url": "https://www.cbirc.gov.cn/"
+  },
+  {
+    "evidence": {},
+    "fetch_mode": "network_error",
+    "final_url": null,
+    "http_status": null,
+    "notes": [
+      "Network fetch failed: HTTPSConnectionPool(host='jr.sz.gov.cn', port=443): Read timed out. (read timeout=40)"
+    ],
+    "recommended_adapter": "browser_required",
+    "source_id": "src-szlf",
+    "source_name": "深圳市地方金融管理局",
+    "sync_url": "https://jr.sz.gov.cn/"
+  },
+  {
+    "evidence": {},
+    "fetch_mode": "network_error",
+    "final_url": null,
+    "http_status": null,
+    "notes": [
+      "Network fetch failed: HTTPSConnectionPool(host='nanchang.pbc.gov.cn', port=443): Read timed out. (read timeout=40)"
+    ],
+    "recommended_adapter": "browser_required",
+    "source_id": "src-pbc-nc",
+    "source_name": "中国人民银行南昌中心支行",
+    "sync_url": "https://nanchang.pbc.gov.cn/"
+  },
+  {
+    "evidence": {},
+    "fetch_mode": "network_error",
+    "final_url": null,
+    "http_status": null,
+    "notes": [
+      "Network fetch failed: HTTPSConnectionPool(host='mp.weixin.qq.com', port=443): Read timed out. (read timeout=40)"
+    ],
+    "recommended_adapter": "browser_required",
+    "source_id": "src-wechat-watch",
+    "source_name": "监管观察公众号",
+    "sync_url": "https://mp.weixin.qq.com"
+  },
+  {
+    "evidence": {},
+    "fetch_mode": "network_error",
+    "final_url": null,
+    "http_status": null,
+    "notes": [
+      "Network fetch failed: HTTPSConnectionPool(host='www.creditchina.gov.cn', port=443): Read timed out. (read timeout=40)"
+    ],
+    "recommended_adapter": "browser_required",
+    "source_id": "src-creditchina",
+    "source_name": "信用中国",
+    "sync_url": "https://www.creditchina.gov.cn"
+  },
+  {
+    "evidence": {},
+    "fetch_mode": "network_error",
+    "final_url": null,
+    "http_status": null,
+    "notes": [
+      "Network fetch failed: HTTPSConnectionPool(host='jrj.beijing.gov.cn', port=443): Read timed out. (read timeout=40)"
+    ],
+    "recommended_adapter": "browser_required",
+    "source_id": "src-bj-finance",
+    "source_name": "北京市地方金融管理局",
+    "sync_url": "https://jrj.beijing.gov.cn/jrgzdt/"
+  },
+  {
+    "evidence": {},
+    "fetch_mode": "network_error",
+    "final_url": null,
+    "http_status": null,
+    "notes": [
+      "Network fetch failed: HTTPSConnectionPool(host='jrj.sh.gov.cn', port=443): Read timed out. (read timeout=40)"
+    ],
+    "recommended_adapter": "browser_required",
+    "source_id": "src-sh-finance",
+    "source_name": "上海市地方金融管理局",
+    "sync_url": "https://jrj.sh.gov.cn/zwdt-gg/index.html"
+  },
+  {
+    "evidence": {
+      "contains_angular": true,
+      "contains_docinfo_api": false,
+      "contains_index_href": true,
+      "contains_li_links": true,
+      "contains_tpl": true,
+      "html_length": 3964,
+      "script_count": 9
+    },
+    "fetch_mode": "dynamic_shell",
+    "final_url": "https://www.nfra.gov.cn/cn/view/pages/ItemList.html?itemId=411&itemName=%E7%9B%91%E7%AE%A1%E5%8A%A8%E6%80%81&itemPId=1&itemUrl=index.html",
+    "http_status": 200,
+    "notes": [
+      "Page shell is dynamic and likely populated through DocInfo/item APIs.",
+      "Detected NFRA dynamic API root: /cbircweb",
+      "Detected NFRA CDN data root: /cn/static/data"
+    ],
+    "recommended_adapter": "nfra_docinfo",
+    "source_id": "src-nfra",
+    "source_name": "国家金融监督管理总局",
+    "sync_url": "https://www.nfra.gov.cn/cn/view/pages/ItemList.html?itemId=411&itemName=%E7%9B%91%E7%AE%A1%E5%8A%A8%E6%80%81&itemPId=1&itemUrl=index.html"
+  },
+  {
+    "evidence": {},
+    "fetch_mode": "network_error",
+    "final_url": null,
+    "http_status": null,
+    "notes": [
+      "Network fetch failed: HTTPSConnectionPool(host='www.pbc.gov.cn', port=443): Read timed out. (read timeout=40)"
+    ],
+    "recommended_adapter": "browser_required",
+    "source_id": "src-pbc",
+    "source_name": "中国人民银行",
+    "sync_url": "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/index.html"
+  }
+]

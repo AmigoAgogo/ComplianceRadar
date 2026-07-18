@@ -1,0 +1,56 @@
+{
+  "sources": [
+    {
+      "source_id": "src-bj-finance",
+      "name": "北京市地方金融管理局",
+      "kind": "official-site",
+      "url": "https://jrj.beijing.gov.cn/",
+      "sync_url": "https://jrj.beijing.gov.cn/jrgzdt/",
+      "parser": "generic_portal",
+      "fallback_html": "data/source_snapshots/bj_finance_sample.html",
+      "region": "北京",
+      "status": "active",
+      "last_checked": "2026-07-07T08:00:00+08:00",
+      "note": "Official Beijing local financial regulator"
+    },
+    {
+      "source_id": "src-sh-finance",
+      "name": "上海市地方金融管理局",
+      "kind": "official-site",
+      "url": "https://jrj.sh.gov.cn/",
+      "sync_url": "https://jrj.sh.gov.cn/zwdt-gg/index.html",
+      "parser": "generic_portal",
+      "fallback_html": "data/source_snapshots/sh_finance_sample.html",
+      "region": "上海",
+      "status": "active",
+      "last_checked": "2026-07-07T08:10:00+08:00",
+      "note": "Official Shanghai local financial regulator"
+    },
+    {
+      "source_id": "src-nfra",
+      "name": "国家金融监督管理总局",
+      "kind": "official-site",
+      "url": "https://www.nfra.gov.cn/",
+      "sync_url": "https://www.nfra.gov.cn/cn/view/pages/ItemList.html?itemId=411&itemName=%E7%9B%91%E7%AE%A1%E5%8A%A8%E6%80%81&itemPId=1&itemUrl=index.html",
+      "parser": "generic_portal",
+      "fallback_html": "data/source_snapshots/nfra_sample.html",
+      "region": "全国",
+      "status": "active",
+      "last_checked": "2026-07-07T08:05:00+08:00",
+      "note": "National Financial Regulatory Administration official site"
+    },
+    {
+      "source_id": "src-pbc",
+      "name": "中国人民银行",
+      "kind": "official-site",
+      "url": "https://www.pbc.gov.cn/",
+      "sync_url": "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/index.html",
+      "parser": "generic_portal",
+      "fallback_html": "data/source_snapshots/pbc_sample.html",
+      "region": "全国",
+      "status": "active",
+      "last_checked": "2026-07-07T07:55:00+08:00",
+      "note": "People's Bank of China official site"
+    }
+  ]
+}

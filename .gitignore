@@ -1,0 +1,11 @@
+.pytest_cache/
+.playwright-cli/
+__pycache__/
+*.pyc
+data/runtime/
+runtime/
+runtime_*/
+*.log
+build/
+dist/
+*.spec

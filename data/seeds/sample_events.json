@@ -1,0 +1,162 @@
+{
+  "models": {
+    "current_model": "Minimax China",
+    "profiles": [
+      {
+        "name": "Minimax China",
+        "provider": "openai-compatible",
+        "base_url": "https://api.minimaxi.com/v1",
+        "api_key": "sk-cp-NVrkJ9QlDEChzhXFL4SlaRnF0CadTRQiiSS5yH9k21TvoiKotQf7I54ZWW8m4lDHp0Nwv-TLj6nxV3mj1wtOn9kUBZeTgiNA3jlAT6BrVSgITfhOlxCHadM",
+        "model_id": "MiniMax-M3",
+        "enabled": true,
+        "timeout": 90,
+        "last_used": "2026-07-07T09:15:00+08:00"
+      }
+    ]
+  },
+  "events": [
+    {
+      "event_id": "evt-001",
+      "title": "某融资租赁公司因租赁物真实性管理不足被采取监管措施",
+      "regulator": "国家金融监督管理总局江苏监管局",
+      "region": "江苏",
+      "category": "业务合规",
+      "institution_type": "融资租赁",
+      "institution_name": "示例融资租赁有限公司",
+      "institution_name_original": "示例融资租赁有限公司",
+      "severity": "major",
+      "published_at": "2026-06-28T09:00:00",
+      "summary": "监管机关指出租赁物底层核验不足，要求机构限期整改并提交报告。",
+      "risk_hint": "反映监管对底层资产真实性和穿透核验要求持续收紧。",
+      "english_brief": "The regulator tightened scrutiny on asset authenticity controls within leasing operations.",
+      "review_status": "pending",
+      "reviewer": null,
+      "review_notes": "",
+      "sources": [
+        {
+          "source_id": "src-nfra-js",
+          "title": "处罚公告原文",
+          "url": "https://example.gov.cn/doc/evt-001",
+          "published_at": "2026-06-28T09:00:00"
+        },
+        {
+          "source_id": "src-wechat-watch",
+          "title": "监管观察公众号转载",
+          "url": "https://mp.weixin.qq.com/s/demo001",
+          "published_at": "2026-06-28T10:00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "title": "原文快照",
+          "kind": "html",
+          "path": "data/evidence/evt-001/source.html"
+        },
+        {
+          "title": "附件PDF",
+          "kind": "pdf",
+          "path": "data/evidence/evt-001/notice.pdf"
+        }
+      ]
+    },
+    {
+      "event_id": "evt-002",
+      "title": "某商业保理公司因信息披露不充分收到监管提示",
+      "regulator": "深圳市地方金融管理局",
+      "region": "广东",
+      "category": "信息披露",
+      "institution_type": "商业保理",
+      "institution_name": "示例商业保理有限公司",
+      "institution_name_original": "示例商业保理有限公司",
+      "severity": "normal",
+      "published_at": "2026-06-30T12:00:00",
+      "summary": "机构在业务披露和存续信息更新方面存在缺口，被要求补充披露。",
+      "risk_hint": "对外披露与存续信息更新可能成为地方监管的持续检查点。",
+      "english_brief": "Local regulators highlighted disclosure and reporting discipline in commercial factoring.",
+      "review_status": "pending",
+      "reviewer": null,
+      "review_notes": "",
+      "sources": [
+        {
+          "source_id": "src-szlf",
+          "title": "地方金融监管公告",
+          "url": "https://example.sz.gov.cn/doc/evt-002",
+          "published_at": "2026-06-30T12:00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "title": "公告截图",
+          "kind": "image",
+          "path": "data/evidence/evt-002/source.png"
+        }
+      ]
+    },
+    {
+      "event_id": "evt-003",
+      "title": "某融资租赁公司因关联交易管控薄弱被行政处罚",
+      "regulator": "国家金融监督管理总局上海监管局",
+      "region": "上海",
+      "category": "关联交易",
+      "institution_type": "融资租赁",
+      "institution_name": "华东租赁样本公司",
+      "institution_name_original": "华东租赁样本公司",
+      "severity": "major",
+      "published_at": "2026-07-02T14:30:00",
+      "summary": "处罚指出关联方交易审批、披露和穿透识别机制均存在缺陷。",
+      "risk_hint": "关联交易治理已从制度检查转向实质交易穿透验证。",
+      "english_brief": "The case signals intensified oversight on related-party controls and substance-based review.",
+      "review_status": "approved",
+      "reviewer": "analyst@example.com",
+      "review_notes": "Validated against original penalty notice.",
+      "sources": [
+        {
+          "source_id": "src-nfra-sh",
+          "title": "上海监管局处罚公告",
+          "url": "https://example.sh.gov.cn/doc/evt-003",
+          "published_at": "2026-07-02T14:30:00"
+        }
+      ],
+      "evidence": [
+        {
+          "title": "原文PDF",
+          "kind": "pdf",
+          "path": "data/evidence/evt-003/notice.pdf"
+        }
+      ]
+    },
+    {
+      "event_id": "evt-004",
+      "title": "某保理公司被纳入经营异常名录并伴随法院执行信息更新",
+      "regulator": "信用中国 / 法院公开信息",
+      "region": "北京",
+      "category": "信用风险",
+      "institution_type": "商业保理",
+      "institution_name": "北方保理样本公司",
+      "institution_name_original": "北方保理样本公司",
+      "severity": "normal",
+      "published_at": "2026-07-03T08:30:00",
+      "summary": "经营异常与执行信息联动出现，构成外部风险观察点。",
+      "risk_hint": "公开信用与执行信息应作为处罚之外的补充风险信号纳入周报。",
+      "english_brief": "Abnormal-operation and court-enforcement signals should be tracked as complementary external risk indicators.",
+      "review_status": "pending",
+      "reviewer": null,
+      "review_notes": "",
+      "sources": [
+        {
+          "source_id": "src-creditchina",
+          "title": "信用中国记录",
+          "url": "https://example.creditchina.gov.cn/doc/evt-004",
+          "published_at": "2026-07-03T08:30:00"
+        }
+      ],
+      "evidence": [
+        {
+          "title": "信用记录快照",
+          "kind": "html",
+          "path": "data/evidence/evt-004/source.html"
+        }
+      ]
+    }
+  ]
+}

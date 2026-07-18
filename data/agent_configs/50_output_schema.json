@@ -1,0 +1,18 @@
+{
+  "required_sections": [
+    "Executive Summary",
+    "China Management Brief",
+    "Global Compliance Brief",
+    "Key Signals",
+    "Risk to Siemens Financial Leasing",
+    "Recommended Actions",
+    "Evidence"
+  ],
+  "rules": {
+    "max_key_signals": 3,
+    "max_actions": 3,
+    "max_evidence_items": 3,
+    "no_generic_summary": true,
+    "no_long_narrative": true
+  }
+}

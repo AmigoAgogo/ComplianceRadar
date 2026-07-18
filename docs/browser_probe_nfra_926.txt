@@ -1,0 +1,98 @@
+REQ https://www.nfra.gov.cn/cn/view/pages/ItemList.html?itemId=926&itemName=%E6%94%BF%E7%AD%96%E6%B3%95%E8%A7%84&itemPId=9103&itemUrl=ItemListRightMore.html
+RES 200 https://www.nfra.gov.cn/cn/view/pages/ItemList.html?itemId=926&itemName=%E6%94%BF%E7%AD%96%E6%B3%95%E8%A7%84&itemPId=9103&itemUrl=ItemListRightMore.html
+REQ https://www.nfra.gov.cn/cn/js/common/ItemList.js?v=20200108
+REQ https://www.nfra.gov.cn/cn/view/pages/ItemListSide.html
+RES 200 https://www.nfra.gov.cn/cn/view/pages/ItemListSide.html
+REQ https://www.nfra.gov.cn/cn/view/pages/ItemListSideLyxd.html
+RES 200 https://www.nfra.gov.cn/cn/view/pages/ItemListSideLyxd.html
+REQ https://www.nfra.gov.cn/cn/view/pages/ItemListRightMore.html
+RES 200 https://www.nfra.gov.cn/cn/view/pages/ItemListRightMore.html
+REQ https://www.nfra.gov.cn/cn/js/common/ItemList.js?v=20200108
+RES 200 https://www.nfra.gov.cn/cn/js/common/ItemList.js?v=20200108
+RES 200 https://www.nfra.gov.cn/cn/js/common/ItemList.js?v=20200108
+REQ https://www.nfra.gov.cn/cn/static/data/Skin/getSysParams/data_.json
+REQ https://www.nfra.gov.cn/cn/static/data/item/getWebMenuItem/data_lang=CN.json
+REQ https://www.nfra.gov.cn/cn/static/data/Skin/getCurkind/data_.json
+REQ https://www.nfra.gov.cn/cn/static/data/DocInfo/SelectItemAndDocByItemPId/data_itemId=4213.json
+REQ https://www.nfra.gov.cn/cn/static/data/item/getWebMenuItem/data_lang=CN.json
+REQ https://www.nfra.gov.cn/cn/static/data/item/getItemNameById/data_itemId=926.json
+REQ https://www.nfra.gov.cn/cn/static/data/item/getLeftMenuItem/data_itemID=9103.json
+REQ https://www.nfra.gov.cn/cn/static/data/item/getItemBread/data_itemId=926.json
+REQ https://www.nfra.gov.cn/cn/static/data/item/getItemNameById/data_itemId=926.json
+REQ https://www.nfra.gov.cn/cn/static/data/DocInfo/SelectItemAndDocByItemPId/data_itemId=926,pageSize=3.json
+REQ https://www.nfra.gov.cn/cn/static/data/OrgInfo/SelectOrg/data_.json
+RES 200 https://www.nfra.gov.cn/cn/static/data/Skin/getCurkind/data_.json
+RES 200 https://www.nfra.gov.cn/cn/static/data/item/getWebMenuItem/data_lang=CN.json
+RES 200 https://www.nfra.gov.cn/cn/static/data/item/getWebMenuItem/data_lang=CN.json
+RES 200 https://www.nfra.gov.cn/cn/static/data/Skin/getSysParams/data_.json
+RES 200 https://www.nfra.gov.cn/cn/static/data/DocInfo/SelectItemAndDocByItemPId/data_itemId=4213.json
+RES 404 https://www.nfra.gov.cn/cn/static/data/item/getLeftMenuItem/data_itemID=9103.json
+REQ https://www.nfra.gov.cn/cbircweb/item/getLeftMenuItem?itemID=9103
+RES 200 https://www.nfra.gov.cn/cn/static/data/item/getItemBread/data_itemId=926.json
+RES 200 https://www.nfra.gov.cn/cn/static/data/item/getItemNameById/data_itemId=926.json
+RES 200 https://www.nfra.gov.cn/cn/static/data/item/getItemNameById/data_itemId=926.json
+RES 200 https://www.nfra.gov.cn/cn/static/data/OrgInfo/SelectOrg/data_.json
+RES 200 https://www.nfra.gov.cn/cn/static/data/DocInfo/SelectItemAndDocByItemPId/data_itemId=926,pageSize=3.json
+REQ https://www.nfra.gov.cn/cn/static/data/DocInfo/SelectItemAndDocByItemPId/data_itemId=923,pageSize=6.json
+REQ https://www.nfra.gov.cn/cn/static/data/leaderinfo/list/data_orgid=1.json
+REQ https://www.nfra.gov.cn/cn/static/data/DocInfo/SelectItemAndDocByItemPId/data_itemId=914,pageSize=10.json
+REQ https://www.nfra.gov.cn/cn/static/data/OrgInfo/SelectOrg/data_.json
+REQ https://www.nfra.gov.cn/cn/static/data/item/getLeftMenuItem/data_itemID=900.json
+REQ https://www.nfra.gov.cn/cn/static/data/typical/query/data_pageSize=4.json
+REQ https://www.nfra.gov.cn/cn/static/data/DocInfo/SelectItemAndDocByItemPId/data_itemId=945.json
+REQ https://www.nfra.gov.cn/cn/static/data/DocInfo/SelectDocImageByItemUUIds/data_itemUUIds=910204,pageSize=6.json
+REQ https://www.nfra.gov.cn/cn/static/data/DocInfo/SelectDocImageByItemUUIds/data_itemUUIds=910206,pageSize=3.json
+REQ https://www.nfra.gov.cn/cn/static/data/DocInfo/SelectItemAndDocByItemPId/data_itemId=923,pageSize=6.json
+REQ https://www.nfra.gov.cn/cn/static/data/DocInfo/SelectItemAndDocByItemUUId/data_pageSize=6.json
+REQ https://www.nfra.gov.cn/cn/static/data/DocInfo/SelectDocByItemUUIdsAndChild/data_itemUUIds=910303,pageSize=6.json
+REQ https://www.nfra.gov.cn/cn/static/data/DocInfo/SelectItemAndDocByItemPId/data_itemId=937,pageSize=4.json
+REQ https://www.nfra.gov.cn/cn/static/data/item/getLeftMenuItem/data_itemID=937.json
+REQ https://www.nfra.gov.cn/cn/static/data/DocInfo/SelectItemAndDocByItemPId/data_itemId=953,pageSize=10.json
+REQ https://www.nfra.gov.cn/cn/static/data/DocInfo/SelectItemAndDocByItemPId/data_itemId=960,pageSize=10.json
+RES 200 https://www.nfra.gov.cn/cn/static/data/OrgInfo/SelectOrg/data_.json
+RES 200 https://www.nfra.gov.cn/cbircweb/item/getLeftMenuItem?itemID=9103
+RES 200 https://www.nfra.gov.cn/cn/static/data/DocInfo/SelectItemAndDocByItemPId/data_itemId=923,pageSize=6.json
+RES 200 https://www.nfra.gov.cn/cn/static/data/DocInfo/SelectItemAndDocByItemPId/data_itemId=923,pageSize=6.json
+RES 200 https://www.nfra.gov.cn/cn/static/data/leaderinfo/list/data_orgid=1.json
+RES 200 https://www.nfra.gov.cn/cn/static/data/DocInfo/SelectItemAndDocByItemPId/data_itemId=914,pageSize=10.json
+RES 200 https://www.nfra.gov.cn/cn/static/data/item/getLeftMenuItem/data_itemID=900.json
+REQ https://www.nfra.gov.cn/cn/static/data/cadre/list/data_cadreType=1,orgid=1.json
+REQ https://www.nfra.gov.cn/cn/static/data/DocInfo/SelectItemAndDocByItemPId/data_itemId=916.json
+RES 200 https://www.nfra.gov.cn/cn/static/data/DocInfo/SelectDocImageByItemUUIds/data_itemUUIds=910204,pageSize=6.json
+RES 200 https://www.nfra.gov.cn/cn/static/data/DocInfo/SelectItemAndDocByItemPId/data_itemId=945.json
+REQ https://www.nfra.gov.cn/cn/static/data/DocInfo/SelectItemAndDocByItemPId/data_itemId=950,pageSize=10.json
+REQ https://www.nfra.gov.cn/cn/static/data/DocInfo/SelectItemAndDocByItemPId/data_itemId=946.json
+REQ https://www.nfra.gov.cn/cn/static/data/DocInfo/SelectItemAndDocByItemPId/data_itemId=924.json
+REQ https://www.nfra.gov.cn/cn/static/data/DocInfo/SelectItemAndDocByItemPId/data_itemId=924.json
+RES 200 https://www.nfra.gov.cn/cn/static/data/typical/query/data_pageSize=4.json
+RES 200 https://www.nfra.gov.cn/cn/static/data/DocInfo/SelectDocByItemUUIdsAndChild/data_itemUUIds=910303,pageSize=6.json
+REQ https://www.nfra.gov.cn/cn/static/data/DocInfo/SelectItemAndDocByItemPId/data_itemId=923.json
+RES 200 https://www.nfra.gov.cn/cn/static/data/DocInfo/SelectItemAndDocByItemPId/data_itemId=937,pageSize=4.json
+RES 200 https://www.nfra.gov.cn/cn/static/data/DocInfo/SelectDocImageByItemUUIds/data_itemUUIds=910206,pageSize=3.json
+RES 200 https://www.nfra.gov.cn/cn/static/data/DocInfo/SelectItemAndDocByItemUUId/data_pageSize=6.json
+RES 200 https://www.nfra.gov.cn/cn/static/data/DocInfo/SelectItemAndDocByItemPId/data_itemId=953,pageSize=10.json
+REQ https://www.nfra.gov.cn/cn/static/data/DocInfo/SelectItemAndDocByItemPId/data_itemId=955.json
+RES 200 https://www.nfra.gov.cn/cn/static/data/DocInfo/SelectItemAndDocByItemPId/data_itemId=960,pageSize=10.json
+RES 200 https://www.nfra.gov.cn/cn/static/data/DocInfo/SelectItemAndDocByItemPId/data_itemId=916.json
+RES 200 https://www.nfra.gov.cn/cn/static/data/cadre/list/data_cadreType=1,orgid=1.json
+RES 200 https://www.nfra.gov.cn/cn/static/data/item/getLeftMenuItem/data_itemID=937.json
+RES 200 https://www.nfra.gov.cn/cn/static/data/DocInfo/SelectItemAndDocByItemPId/data_itemId=924.json
+RES 200 https://www.nfra.gov.cn/cn/static/data/DocInfo/SelectItemAndDocByItemPId/data_itemId=924.json
+RES 200 https://www.nfra.gov.cn/cn/static/data/DocInfo/SelectItemAndDocByItemPId/data_itemId=950,pageSize=10.json
+RES 200 https://www.nfra.gov.cn/cn/static/data/DocInfo/SelectItemAndDocByItemPId/data_itemId=946.json
+REQ https://www.nfra.gov.cn/chinese/item/imgs/68a2c9055d634a8194eac69d40425154.png
+REQ https://www.nfra.gov.cn/chinese/item/imgs/77af8d4a9b1849f2a60edd493ac59007.png
+REQ https://www.nfra.gov.cn/chinese/item/imgs/8d5a2f81e9c0469cb308a759305f4ee8.jpg
+REQ https://www.nfra.gov.cn/chinese/item/imgs/a47ece83fb88430cafa02d8582c4250a.jpg
+REQ https://www.nfra.gov.cn/chinese/item/imgs/a9a03dff6a2e410c9b9c6230b86d087b.png
+REQ https://www.nfra.gov.cn/chinese/item/imgs/8d232ae98b814344838eadcd11817295.png
+RES 200 https://www.nfra.gov.cn/cn/static/data/DocInfo/SelectItemAndDocByItemPId/data_itemId=923.json
+RES 200 https://www.nfra.gov.cn/cn/static/data/DocInfo/SelectItemAndDocByItemPId/data_itemId=955.json
+REQ https://www.nfra.gov.cn/cn/static/data/static/image/data_item=956.json
+RES 200 https://www.nfra.gov.cn/cn/static/data/static/image/data_item=956.json
+RES 200 https://www.nfra.gov.cn/chinese/item/imgs/68a2c9055d634a8194eac69d40425154.png
+RES 200 https://www.nfra.gov.cn/chinese/item/imgs/77af8d4a9b1849f2a60edd493ac59007.png
+RES 200 https://www.nfra.gov.cn/chinese/item/imgs/a9a03dff6a2e410c9b9c6230b86d087b.png
+RES 200 https://www.nfra.gov.cn/chinese/item/imgs/8d5a2f81e9c0469cb308a759305f4ee8.jpg
+RES 200 https://www.nfra.gov.cn/chinese/item/imgs/a47ece83fb88430cafa02d8582c4250a.jpg
+RES 200 https://www.nfra.gov.cn/chinese/item/imgs/8d232ae98b814344838eadcd11817295.png

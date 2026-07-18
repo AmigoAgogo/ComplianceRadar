@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <div class="shell">
+      <aside class="sidebar">
+        <h1>ComplianceRadar</h1>
+        <p class="tag">POC demo for enforcement intelligence</p>
+        <nav>
+          <button class="nav-link active" data-view="dashboard">Dashboard</button>
+          <button class="nav-link" data-view="review">Regulatory Radar</button>
+          <button class="nav-link" data-view="events">Event Library</button>
+          <button class="nav-link" data-view="sources">Source Center</button>
+          <button class="nav-link" data-view="models">Model Gateway</button>
+        </nav>
+        <div class="sidebar-actions">
+          <button id="reset-demo">Reset Demo Data</button>
+        </div>
+      </aside>
+      <main class="content">
+        <div id="app-status-banner" class="status-banner hidden"></div>
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">China Regulatory Enforcement Intelligence</p>
+            <h2>Management-facing regulatory trend platform</h2>
+            <div id="loaded-agent-name" class="meta">Agent: loading...</div>
+          </div>
+          <div class="topbar-actions">
+            <button id="export-reports">Export Reports</button>
+            <div class="status-pill" id="current-model-pill">Model: loading...</div>
+          </div>
+        </header>
+
+        <section id="view-dashboard" class="view active">
+          <div class="cards" id="summary-cards"></div>
+          <div class="grid-two">
+            <section class="panel">
+              <h3>Penalty Intelligence</h3>
+              <div id="dashboard-trend-window" class="meta">Trend window loading...</div>
+              <div id="management-headline" class="section-note">Loading management summary...</div>
+              <div id="penalty-intelligence"></div>
+            </section>
+            <section class="panel">
+              <h3>Top Penalty Reasons</h3>
+              <div id="reason-chart" class="bar-chart"></div>
+            </section>
+          </div>
+          <section class="panel">
+            <h3>Financial Compliance Early Warning</h3>
+            <div class="meta">Control Domains and Management Actions are derived from the events currently fetched from configured sources.</div>
+            <div id="early-warning-panel"></div>
+          </section>
+        </section>
+
+        <section id="view-events" class="view">
+          <section class="panel">
+            <h3>Event Library</h3>
+            <div class="toolbar">
+              <input id="event-period-from" type="date" />
+              <input id="event-period-to" type="date" />
+              <button id="apply-event-filters">Apply Period</button>
+              <button id="clear-event-filters" type="button">Clear Period</button>
+              <button id="refresh-events">Refresh Local</button>
+              <button id="update-all-events" data-busy-action="sync">Update All Sources</button>
+            </div>
+            <div class="meta" id="event-status-line">Local data only until update runs.</div>
+            <p class="section-note">Only real article-level records fetched from configured sources are shown here. If a source cannot return a live article, the update will report an error instead of creating a placeholder link.</p>
+            <div id="event-sync-progress" class="progress-shell hidden" aria-live="polite">
+            <div class="progress-meta">
+                <span id="event-sync-progress-label">Waiting to update.</span>
+                <span id="event-sync-progress-value">0%</span>
+              </div>
+              <div class="progress-track">
+                <div id="event-sync-progress-bar" class="progress-bar"></div>
+              </div>
+            </div>
+            <div id="event-filter-summary" class="meta">Showing all available announcements.</div>
+            <div class="scroll-region events-scroll">
+              <div id="events-table-shell"></div>
+            </div>
+          </section>
+        </section>
+
+        <section id="view-review" class="view">
+          <section class="panel">
+            <h3>Regulatory Radar</h3>
+            <p class="section-note">This merged workspace combines regulatory outlook with AI analysis so management can see the signal, the implication, and the recommended response in one place.</p>
+            <div id="review-outlook-meta" class="review-hero">
+              <div class="review-kpi">
+                <div class="label">Major Signals</div>
+                <div id="review-kpi-major" class="value">0</div>
+              </div>
+              <div class="review-kpi">
+                <div class="label">Primary Theme</div>
+                <div id="review-kpi-theme" class="value">Loading...</div>
+              </div>
+              <div class="review-kpi">
+                <div class="label">Observation Window</div>
+                <div id="review-kpi-window" class="value">Loading...</div>
+              </div>
+            </div>
+            <div id="review-outlook" class="scroll-region watchpoint-scroll"></div>
+            <div class="ai-console-grid">
+              <div class="ai-console-main">
+                <div class="copilot-hero">
+                  <div class="copilot-hero-copy">
+                    <div class="eyebrow">Executive Copilot</div>
+                    <h4>One place to interpret China enforcement signals through Siemens Financial Leasing's control lens.</h4>
+                    <p>The AI response is grounded in the live radar and is tuned to produce a management-ready regulatory reading.</p>
+                  </div>
+                  <div class="copilot-hero-metrics">
+                    <div class="copilot-chip">
+                      <span>Current Model</span>
+                      <strong id="copilot-current-model">Loading...</strong>
+                    </div>
+                  </div>
+                </div>
+                <textarea id="ai-prompt" rows="4">Summarize this week's regulatory trend for Siemens Financial Leasing management.</textarea>
+                <div class="toolbar ai-console-actions">
+                  <button id="send-ai">Ask AI</button>
+                  <button id="ai-copy-full" type="button">Copy Full</button>
+                  <button id="ai-edit-opinion" type="button">Edit AI Opinion</button>
+                  <button id="ai-export-brief" type="button">Export Brief</button>
+                  <span id="ai-run-meta" class="inline-status">AI will answer using the current radar snapshot.</span>
+                </div>
+                <div class="ai-brief-grid">
+                  <div class="ai-brief-card">
+                    <div class="label">Executive Summary</div>
+                    <div id="ai-brief-summary" class="context-body">No summary yet.</div>
+                  </div>
+                  <div class="ai-brief-card">
+                    <div class="label">China Management Brief</div>
+                    <div id="ai-brief-china" class="context-body">No China brief yet.</div>
+                  </div>
+                  <div class="ai-brief-card">
+                    <div class="label">Global Compliance Brief</div>
+                    <div id="ai-brief-global" class="context-body">No global brief yet.</div>
+                  </div>
+                  <div class="ai-brief-card">
+                    <div class="label">Key Signals</div>
+                    <div id="ai-brief-signals" class="context-body">No signals yet.</div>
+                  </div>
+                  <div class="ai-brief-card">
+                    <div class="label">Risk Implication</div>
+                    <div id="ai-brief-risk" class="context-body">No risk implication yet.</div>
+                  </div>
+                  <div class="ai-brief-card">
+                    <div class="label">Recommended Actions</div>
+                    <div id="ai-brief-actions" class="context-body">No recommended actions yet.</div>
+                  </div>
+                </div>
+                <div class="ai-response-shell">
+                  <div class="ai-response-header">
+                    <strong>Regulatory Output</strong>
+                    <span id="ai-response-meta" class="inline-status">No response yet.</span>
+                  </div>
+                  <pre id="ai-response" class="console"></pre>
+                </div>
+              </div>
+              <aside class="ai-console-side">
+                <div class="ai-context-card">
+                  <div class="label">Business Lens</div>
+                  <div id="ai-context-lens" class="context-body">Siemens Financial Leasing perspective will appear here.</div>
+                </div>
+                <div class="ai-context-card">
+                  <div class="label">Agent Config Folder</div>
+                  <pre id="ai-context-agent-folder" class="context-pre">No agent config folder detected yet.</pre>
+                </div>
+              </aside>
+            </div>
+          </section>
+        </section>
+
+        <section id="view-sources" class="view">
+          <section class="panel">
+            <h3>Source Center</h3>
+            <p class="section-note">Only valid live regulatory URLs or recognized regulator names can be added. Each new source is checked before it is saved.</p>
+            <div class="toolbar">
+              <input id="source-discovery-input" placeholder="Paste a URL or full Chinese institution name" />
+              <button id="discover-source">Add Source</button>
+            </div>
+            <div class="meta" id="source-discovery-result">No source changes yet.</div>
+            <div class="meta">Health Status is based on the latest sync result and source reachability.</div>
+            <div id="source-list"></div>
+          </section>
+        </section>
+
+        <section id="view-reports" class="view">
+          <section class="panel">
+            <h3>Report Exports</h3>
+            <div id="report-links"></div>
+          </section>
+        </section>
+
+        <section id="view-models" class="view">
+          <section class="panel">
+            <h3>Model Gateway</h3>
+            <p class="section-note">Only your configured Minimax model is retained in the POC baseline. You can refresh its catalog and update its connection details here.</p>
+            <div class="form-grid">
+              <select id="model-provider">
+                <option value="openai-compatible">openai-compatible</option>
+              </select>
+              <input id="model-base-url" placeholder="base URL" />
+              <input id="model-api-key" placeholder="API key" />
+              <select id="model-model-id">
+                <option value="">Select model after loading catalog</option>
+              </select>
+            </div>
+            <div class="toolbar">
+              <button id="load-model-catalog">Load Model Catalog</button>
+              <span id="model-catalog-status" class="inline-status">Catalog not loaded.</span>
+            </div>
+            <button id="save-minimax-model">Save Minimax Settings</button>
+            <div id="model-list"></div>
+            <pre id="model-test-result" class="console small"></pre>
+          </section>
+        </section>
+        <section class="panel">
+          <h3>Activity</h3>
+          <pre id="activity-log" class="console small"></pre>
+        </section>
+      </main>
+    </div>
+    <div id="sync-period-modal" class="modal-overlay hidden" aria-hidden="true">
+      <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="sync-period-title">
+        <h3 id="sync-period-title">Choose Update Window</h3>
+        <p>Select the source update range. LLM processing will begin immediately after you choose one option.</p>
+        <div class="modal-actions">
+          <button class="sync-period-option" data-period="today" type="button">Today</button>
+          <button class="sync-period-option" data-period="7d" type="button">Last 7 Days</button>
+          <button class="sync-period-option" data-period="30d" type="button">Last 30 Days</button>
+        </div>
+      </div>
+    </div>
+    <script src="/static/app.js"></script>
+  </body>
+</html>
