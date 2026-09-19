@@ -139,10 +139,11 @@ class ArticleCrawlerService:
             "source_id": source.get("source_id", ""),
             "source_name": source.get("name", ""),
             "title": title,
-            "published_at": self._extract_nearby_date(html, 0),
+            "published_at": self._extract_document_date(html),
             "source_url": article_url,
             "institution_name": self._extract_institution_name(body_text),
             "body_text": body_text,
+            "raw_html": html,
             "matched_keywords": self._matched_keywords(scope_text, expanded_keywords),
             "extractor": "direct_article",
         }
@@ -594,6 +595,17 @@ class ArticleCrawlerService:
         match = re.search(r"([0-9]{4}-[0-9]{2}-[0-9]{2})", window)
         return match.group(1) if match else ""
 
+    def _extract_document_date(self, html: str) -> str:
+        text = self._clean_text(re.sub(r"<[^>]+>", " ", html))
+        for pattern in (
+            r"(?:发布时间|发布日期)[:：]?\s*([0-9]{4}-[0-9]{2}-[0-9]{2})",
+            r"([0-9]{4}-[0-9]{2}-[0-9]{2})",
+        ):
+            match = re.search(pattern, text)
+            if match:
+                return match.group(1)
+        return ""
+
     def _extract_main_text(self, html: str) -> str:
         try:
             import trafilatura
@@ -608,10 +620,20 @@ class ArticleCrawlerService:
         return self._clean_text(re.sub(r"<[^>]+>", " ", stripped))
 
     def _extract_title(self, html: str) -> str:
+        soup = BeautifulSoup(html, "html.parser")
+        article_title = soup.find("meta", attrs={"name": re.compile(r"^ArticleTitle$", re.I)})
+        if article_title and article_title.get("content"):
+            title = self._clean_text(
+                re.sub(r"<[^>]+>", " ", unescape(article_title.get("content", "")))
+            )
+            if title:
+                return title
         for pattern in (r"<h1[^>]*>(.*?)</h1>", r"<title>(.*?)</title>"):
             match = re.search(pattern, html, re.I | re.S)
             if match:
-                title = self._clean_text(match.group(1))
+                title = self._clean_text(
+                    re.sub(r"<[^>]+>", " ", unescape(match.group(1)))
+                )
                 if title:
                     return title
         return ""
@@ -626,6 +648,7 @@ class ArticleCrawlerService:
 
     def _extract_institution_name(self, text: str) -> str:
         patterns = [
+            r"公司名称[:：]?\s*(.*?公司)(?:\s|统一社会信用代码|法定代表人|处罚事由|主要违法违规行为)",
             r"当事人名称[:：]?\s*(.*?)(?:主要违法违规行为|违法违规事实|行政处罚内容)",
             r"机构名称[:：]?\s*(.*?)(?:主要违法违规行为|违法违规事实|行政处罚内容)",
         ]

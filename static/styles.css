@@ -2,9 +2,15 @@
   box-sizing: border-box;
 }
 
+html {
+  font-size: clamp(17px, 1.25vw, 26px);
+}
+
 body {
   margin: 0;
   font-family: "Bahnschrift", "Segoe UI", sans-serif;
+  font-size: 1rem;
+  line-height: 1.45;
   background:
     radial-gradient(circle at top right, rgba(14, 165, 233, 0.14), transparent 28%),
     linear-gradient(180deg, #f5f8fb 0%, #e7eef5 100%);
@@ -13,23 +19,33 @@ body {
 
 .shell {
   display: grid;
-  grid-template-columns: 280px 1fr;
+  grid-template-columns: 420px minmax(0, 1fr);
   min-height: 100vh;
 }
 
 .sidebar {
   background: #102a43;
   color: #f0f4f8;
-  padding: 24px;
+  min-width: 0;
+  padding: 30px 28px;
 }
 
 .sidebar h1 {
-  margin: 0 0 8px;
+  margin: 0 0 12px;
+  font-size: 1.8rem;
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+  white-space: nowrap;
 }
 
 .tag,
 .eyebrow {
   color: #9fb3c8;
+}
+
+.tag {
+  font-size: 1rem;
+  line-height: 1.4;
 }
 
 .sidebar nav,
@@ -54,6 +70,8 @@ body {
   border-radius: 12px;
   padding: 12px 14px;
   cursor: pointer;
+  font: inherit;
+  font-size: 0.95rem;
 }
 
 .nav-link {
@@ -68,7 +86,8 @@ body {
 }
 
 .content {
-  padding: 24px;
+  min-width: 0;
+  padding: 28px;
   background:
     linear-gradient(135deg, rgba(255, 255, 255, 0.3), transparent),
     repeating-linear-gradient(
@@ -91,7 +110,7 @@ body {
   margin-bottom: 16px;
   padding: 12px 14px;
   border-radius: 14px;
-  font-size: 0.92rem;
+  font-size: 1rem;
   border: 1px solid transparent;
 }
 
@@ -162,7 +181,7 @@ body {
 
 .card .label {
   color: #486581;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
 }
 
 .card .value {
@@ -178,7 +197,7 @@ body {
 .bar-label {
   display: flex;
   justify-content: space-between;
-  font-size: 0.92rem;
+  font-size: 0.95rem;
 }
 
 .bar {
@@ -199,7 +218,7 @@ body {
 .events-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.92rem;
+  font-size: 0.95rem;
   table-layout: fixed;
 }
 
@@ -241,7 +260,7 @@ body {
 
 .meta {
   color: #486581;
-  font-size: 0.88rem;
+  font-size: 0.92rem;
 }
 
 .hidden {
@@ -251,14 +270,14 @@ body {
 .section-note,
 .inline-status {
   color: #486581;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
 }
 
 .badge {
   display: inline-block;
   border-radius: 999px;
   padding: 4px 8px;
-  font-size: 0.78rem;
+  font-size: 0.82rem;
   margin-right: 8px;
 }
 
@@ -359,7 +378,7 @@ textarea {
 
 .copilot-chip span {
   display: block;
-  font-size: 0.82rem;
+  font-size: 0.88rem;
   color: rgba(241, 245, 249, 0.8);
 }
 
@@ -473,7 +492,7 @@ textarea {
   gap: 12px;
   margin-bottom: 8px;
   color: #24557a;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
 }
 
 .progress-track {

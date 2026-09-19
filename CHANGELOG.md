@@ -6,6 +6,8 @@ All notable ComplianceRadar changes should be recorded here before pushing to Gi
 
 ### Added
 
+- Added demo video publishing, compression, and recovery scripts so Agent-produced media artifacts are registered and recoverable.
+- Added artifact delivery policy documenting required manifest, evidence, and verification gates for user-facing outputs.
 - Documented the correct GitHub repository: `https://github.com/AmigoAgogo/ComplianceRader`.
 - Added portable runtime data layout documentation.
 - Added append-only runtime ledgers for AI opinions and user review decisions.
@@ -20,5 +22,6 @@ All notable ComplianceRadar changes should be recorded here before pushing to Gi
 
 ### Fixed
 
+- Published the recovered ComplianceRadar demo video into a stable `dist\demo_media` delivery location and registered both the original-quality and compressed versions.
 - Reduced the risk of losing historical crawled data, Agent opinions, or human review notes during rebuilds and iterations.
 - Prevented AI opinion edits and announcement deletions from silently overwriting prior runtime records.

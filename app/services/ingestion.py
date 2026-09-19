@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import csv
+import hashlib
 import json
 import re
 import time
@@ -495,28 +496,91 @@ class DemoIngestionService:
             raise KeyError(f"Unknown source: {source_id}")
 
         article = self.article_crawler.analyze_direct_article(source, article_url, keywords)
+        body_text = article.get("body_text", "")
+        published_date = article.get("published_at", "") or date.today().isoformat()
+        institution_name = article.get("institution_name", "Not disclosed in source article")
+        institution_type = "商业保理" if "保理" in institution_name else "融资租赁"
+        penalty_analysis = self._analyze_article(
+            title=article.get("title", ""),
+            summary=body_text[:800],
+            category_line=body_text,
+        )
+        event_id = (
+            f"direct-{source_id}-{published_date}-"
+            f"{hashlib.sha256(article_url.encode('utf-8')).hexdigest()[:12]}"
+        )
+        evidence_path = self._write_evidence_html(
+            event_id,
+            article.get("raw_html") or body_text,
+        )
         analysis_event = {
+            "event_id": event_id,
             "title": article.get("title", ""),
             "regulator": source["name"],
             "region": source.get("region", "全国"),
-            "category": "监管动态",
-            "institution_name": article.get("institution_name", "Not disclosed in source article"),
-            "institution_name_original": article.get("institution_name", "Not disclosed in source article"),
-            "summary": article.get("body_text", "")[:800],
-            "risk_hint": "Pending LLM analysis from real source content.",
+            "category": "监管处罚" if penalty_analysis["is_penalty_event"] else "监管动态",
+            "institution_type": institution_type,
+            "institution_name": institution_name,
+            "institution_name_original": institution_name,
+            "severity": "major" if penalty_analysis["is_penalty_event"] else "normal",
+            "published_at": f"{published_date}T09:00:00",
+            "summary": body_text[:800],
+            "risk_hint": penalty_analysis["compliance_warning"],
             "english_brief": f"Live article from {source['name']}",
+            "analysis_summary": penalty_analysis["analysis_summary"],
+            "penalty_focus": penalty_analysis["penalty_focus"],
+            "compliance_warning": penalty_analysis["compliance_warning"],
+            "is_penalty_event": penalty_analysis["is_penalty_event"],
+            "source_capture_mode": "direct_article",
+            "review_status": "pending",
+            "reviewer": None,
+            "review_notes": "",
+            "sources": [
+                {
+                    "source_id": source_id,
+                    "title": article.get("title", ""),
+                    "url": article_url,
+                    "published_at": f"{published_date}T09:00:00",
+                }
+            ],
+            "evidence": [
+                {
+                    "title": "Direct article source snapshot",
+                    "kind": "html" if article.get("raw_html") else "text",
+                    "path": str(evidence_path),
+                }
+            ],
         }
         enrichment = self._enrich_event_if_possible(
             analysis_event,
             self.store.load() if self.store.exists() else self._load_seed_state(),
         )
         enriched_event = enrichment["event"]
+        enriched_event.update(
+            build_event_quality(
+                article_url=article_url,
+                title=article.get("title", ""),
+                institution_name=institution_name,
+                llm_completed=enrichment["used_llm"],
+            )
+        )
+        state = self.store.load() if self.store.exists() else self._load_seed_state()
+        event_added = not self._event_exists(
+            state.get("events", []),
+            enriched_event["title"],
+            enriched_event["published_at"],
+        )
+        if event_added:
+            state.setdefault("events", []).insert(0, deepcopy(enriched_event))
+            self.store.save(state)
         return {
             "source_id": source_id,
             "source_name": source["name"],
             "article_count": 1,
             "llm_enriched_count": 1 if enrichment["used_llm"] else 0,
             "llm_model": enrichment["model"],
+            "event_added": event_added,
+            "persisted_event": deepcopy(enriched_event),
             "articles": [
                 {
                     "title": article.get("title", ""),

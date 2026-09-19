@@ -158,6 +158,13 @@ function logActivity(message) {
   consoleNode.textContent = `[${stamp}] ${message}\n${consoleNode.textContent}`;
 }
 
+function describeLoadedWorkspace(dashboard) {
+  const eventCount = Array.isArray(dashboard.events) ? dashboard.events.length : 0;
+  const sourceCount = Array.isArray(dashboard.sources) ? dashboard.sources.length : 0;
+  const model = dashboard.models?.current_model || "No model selected";
+  return `Workspace loaded: ${eventCount} Event Library record(s), ${sourceCount} configured source(s), model ${model}.`;
+}
+
 async function fetchJson(url, options = {}) {
   const base = await detectApiBase();
   const targetUrl = url.startsWith("http") ? url : `${base}${url}`;
@@ -1029,6 +1036,7 @@ async function bootstrapApp() {
   try {
     await detectApiBase();
     await loadDashboard();
+    logActivity(describeLoadedWorkspace(state.dashboard));
   } catch (error) {
     setStatusBanner(`Unable to connect to the local ComplianceRadar API. ${error.message}`, "error");
     document.getElementById("event-status-line").textContent = `Unable to connect to the local ComplianceRadar API. ${error.message}`;
