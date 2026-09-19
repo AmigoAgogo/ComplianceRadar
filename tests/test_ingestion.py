@@ -514,6 +514,32 @@ class IngestionTests(unittest.TestCase):
         self.assertIn("裕华融资租赁（上海）有限公司", evidence_path.read_text(encoding="utf-8"))
         self.assertIn(persisted["event_id"], [event["event_id"] for event in self.store.load()["events"]])
 
+    @patch("app.services.article_crawler.ArticleCrawlerService.analyze_direct_article")
+    def test_direct_article_does_not_invent_institution_type_when_name_is_undisclosed(
+        self,
+        mock_analyze_direct_article,
+    ) -> None:
+        mock_analyze_direct_article.return_value = {
+            "source_id": "src-sh-finance",
+            "source_name": "上海市地方金融管理局",
+            "title": "行政处罚信息公开表",
+            "published_at": "2026-08-18",
+            "source_url": "https://jrj.sh.gov.cn/XZCF233/undisclosed.html",
+            "institution_name": "Not disclosed in source article",
+            "body_text": "处罚对象名称未披露。",
+            "raw_html": "<html><body>处罚对象名称未披露。</body></html>",
+            "matched_keywords": ["行政处罚"],
+            "extractor": "direct_article",
+        }
+
+        payload = self.service.run_direct_article_workflow(
+            source_id="src-sh-finance",
+            article_url="https://jrj.sh.gov.cn/XZCF233/undisclosed.html",
+            keywords=["行政处罚"],
+        )
+
+        assert payload["persisted_event"]["institution_type"] == "未披露"
+
     @patch("app.services.article_crawler.requests.get")
     @patch("app.services.article_crawler.pdfplumber.open")
     def test_direct_pdf_article_can_be_analyzed(self, mock_pdf_open, mock_get) -> None:

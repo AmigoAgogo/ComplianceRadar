@@ -499,7 +499,12 @@ class DemoIngestionService:
         body_text = article.get("body_text", "")
         published_date = article.get("published_at", "") or date.today().isoformat()
         institution_name = article.get("institution_name", "Not disclosed in source article")
-        institution_type = "商业保理" if "保理" in institution_name else "融资租赁"
+        if "保理" in institution_name:
+            institution_type = "商业保理"
+        elif "租赁" in institution_name:
+            institution_type = "融资租赁"
+        else:
+            institution_type = "未披露"
         penalty_analysis = self._analyze_article(
             title=article.get("title", ""),
             summary=body_text[:800],
