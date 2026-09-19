@@ -127,6 +127,14 @@ class UiContractTests(unittest.TestCase):
         self.assertIn("/api/health", js)
         self.assertIn("127.0.0.1", js)
 
+    def test_successful_bootstrap_writes_loaded_workspace_activity(self) -> None:
+        js = Path("static/app.js").read_text(encoding="utf-8")
+
+        self.assertIn("function describeLoadedWorkspace", js)
+        self.assertIn("logActivity(describeLoadedWorkspace(state.dashboard))", js)
+        self.assertIn("Event Library record(s)", js)
+        self.assertIn("configured source(s)", js)
+
     def test_ai_console_is_simplified_and_keeps_export_actions(self) -> None:
         html = Path("templates/index.html").read_text(encoding="utf-8")
         js = Path("static/app.js").read_text(encoding="utf-8")

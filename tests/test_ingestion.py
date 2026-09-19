@@ -1,6 +1,7 @@
 import tempfile
 import unittest
 import io
+from datetime import date
 from pathlib import Path
 from unittest.mock import patch
 
@@ -20,6 +21,14 @@ class IngestionTests(unittest.TestCase):
 
     def tearDown(self) -> None:
         self.tempdir.cleanup()
+
+    def _sync_sources_in_fixture_window(self, **kwargs) -> dict:
+        with patch.object(
+            self.service,
+            "_period_start_date",
+            return_value=date(2026, 6, 8),
+        ):
+            return self.service.sync_sources(**kwargs)
 
     def _seed_fetch(self, url: str, timeout: int = 15) -> str:
         fixtures_dir = Path("tests/fixtures")
@@ -125,7 +134,10 @@ class IngestionTests(unittest.TestCase):
         self.assertEqual(preserved["review_notes"], "Keep this review")
 
     def test_sync_sources_adds_fetched_event_and_evidence(self) -> None:
-        result = self.service.sync_sources(fetch_html=self._seed_fetch, period="30d")
+        result = self._sync_sources_in_fixture_window(
+            fetch_html=self._seed_fetch,
+            period="30d",
+        )
 
         self.assertGreaterEqual(result["synced_count"], 6)
         self.assertGreaterEqual(result["event_count"], 10)
@@ -174,7 +186,7 @@ class IngestionTests(unittest.TestCase):
                 }
             ],
         ):
-            result = self.service.sync_sources(
+            result = self._sync_sources_in_fixture_window(
                 period="30d",
                 fetch_html=lambda url, timeout=15: (_ for _ in ()).throw(RuntimeError("offline"))
             )
@@ -378,7 +390,10 @@ class IngestionTests(unittest.TestCase):
             }
         ]
 
-        result = self.service.sync_sources(source_ids=["src-nfra"], period="30d")
+        result = self._sync_sources_in_fixture_window(
+            source_ids=["src-nfra"],
+            period="30d",
+        )
 
         self.assertEqual(result["synced_count"], 1)
 
@@ -435,6 +450,95 @@ class IngestionTests(unittest.TestCase):
         self.assertEqual(payload["article_count"], 1)
         self.assertEqual(payload["articles"][0]["source_url"], "https://jrj.sh.gov.cn/example.html")
         self.assertEqual(payload["articles"][0]["matched_keywords"], ["融资租赁", "商业保理"])
+
+    @patch("app.services.article_crawler.ArticleCrawlerService._fetch_html")
+    def test_direct_article_extracts_company_name_and_page_date(self, mock_fetch_html) -> None:
+        mock_fetch_html.return_value = """
+        <html>
+          <head>
+            <title>上海市地方金融管理局&lt;br/&gt;行政处罚信息公开表_站点名称</title>
+            <meta name="ArticleTitle" content="上海市地方金融管理局&lt;br/&gt;行政处罚信息公开表（沪金管罚决字〔2025〕2号）">
+          </head>
+          <body>
+            <div>信息来源：上海市地方金融管理局 发布时间：2025-08-18</div>
+            <table>
+              <tr><td>被处罚人信息</td><td>公司名称</td><td>裕华融资租赁（上海）有限公司</td></tr>
+              <tr><td>案件信息</td><td>处罚事由</td><td>未按规定报送经营信息</td></tr>
+              <tr><td>行政处罚决定</td><td>罚款人民币五万元</td></tr>
+            </table>
+          </body>
+        </html>
+        """
+
+        article = self.service.article_crawler.analyze_direct_article(
+            source={"source_id": "src-sh-finance", "name": "上海市地方金融管理局"},
+            article_url="https://jrj.sh.gov.cn/XZCF233/example.html",
+            keywords=["融资租赁", "行政处罚"],
+        )
+
+        self.assertEqual(
+            article["title"],
+            "上海市地方金融管理局 行政处罚信息公开表（沪金管罚决字〔2025〕2号）",
+        )
+        self.assertEqual(article["published_at"], "2025-08-18")
+        self.assertEqual(article["institution_name"], "裕华融资租赁（上海）有限公司")
+
+    @patch("app.services.article_crawler.ArticleCrawlerService.analyze_direct_article")
+    def test_direct_article_workflow_persists_event_and_source_evidence(self, mock_analyze_direct_article) -> None:
+        article_url = "https://jrj.sh.gov.cn/XZCF233/20250818/verified.html"
+        mock_analyze_direct_article.return_value = {
+            "source_id": "src-sh-finance",
+            "source_name": "上海市地方金融管理局",
+            "title": "上海市地方金融管理局行政处罚信息公开表（沪金管罚决字〔2025〕2号）",
+            "published_at": "2025-08-18",
+            "source_url": article_url,
+            "institution_name": "裕华融资租赁（上海）有限公司",
+            "body_text": "裕华融资租赁（上海）有限公司未按规定报送经营信息，罚款人民币五万元。",
+            "raw_html": "<html><body>裕华融资租赁（上海）有限公司 罚款人民币五万元</body></html>",
+            "matched_keywords": ["融资租赁", "行政处罚"],
+            "extractor": "direct_article",
+        }
+
+        payload = self.service.run_direct_article_workflow(
+            source_id="src-sh-finance",
+            article_url=article_url,
+            keywords=["融资租赁", "行政处罚"],
+        )
+
+        self.assertTrue(payload["event_added"])
+        persisted = payload["persisted_event"]
+        self.assertEqual(persisted["institution_name_original"], "裕华融资租赁（上海）有限公司")
+        self.assertEqual(persisted["sources"][0]["url"], article_url)
+        evidence_path = Path(persisted["evidence"][0]["path"])
+        self.assertTrue(evidence_path.exists())
+        self.assertIn("裕华融资租赁（上海）有限公司", evidence_path.read_text(encoding="utf-8"))
+        self.assertIn(persisted["event_id"], [event["event_id"] for event in self.store.load()["events"]])
+
+    @patch("app.services.article_crawler.ArticleCrawlerService.analyze_direct_article")
+    def test_direct_article_does_not_invent_institution_type_when_name_is_undisclosed(
+        self,
+        mock_analyze_direct_article,
+    ) -> None:
+        mock_analyze_direct_article.return_value = {
+            "source_id": "src-sh-finance",
+            "source_name": "上海市地方金融管理局",
+            "title": "行政处罚信息公开表",
+            "published_at": "2026-08-18",
+            "source_url": "https://jrj.sh.gov.cn/XZCF233/undisclosed.html",
+            "institution_name": "Not disclosed in source article",
+            "body_text": "处罚对象名称未披露。",
+            "raw_html": "<html><body>处罚对象名称未披露。</body></html>",
+            "matched_keywords": ["行政处罚"],
+            "extractor": "direct_article",
+        }
+
+        payload = self.service.run_direct_article_workflow(
+            source_id="src-sh-finance",
+            article_url="https://jrj.sh.gov.cn/XZCF233/undisclosed.html",
+            keywords=["行政处罚"],
+        )
+
+        assert payload["persisted_event"]["institution_type"] == "未披露"
 
     @patch("app.services.article_crawler.requests.get")
     @patch("app.services.article_crawler.pdfplumber.open")
@@ -1113,7 +1217,10 @@ class IngestionTests(unittest.TestCase):
         )
 
     def test_synced_event_contains_credibility_fields(self) -> None:
-        result = self.service.sync_sources(fetch_html=self._seed_fetch, period="30d")
+        result = self._sync_sources_in_fixture_window(
+            fetch_html=self._seed_fetch,
+            period="30d",
+        )
 
         self.assertGreater(result["synced_count"], 0)
         event = next(event for event in self.store.load()["events"] if event["event_id"].startswith("sync-"))
